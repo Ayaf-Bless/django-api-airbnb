@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="cef6bd73-8db3-4452-a6c2-a03e848f8f21" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/rooms/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/viewsets.py" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/viewsets.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/serializers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +137,7 @@
       <workItem from="1644128805573" duration="1003000" />
       <workItem from="1644154389589" duration="5330000" />
       <workItem from="1644239148755" duration="4157000" />
-      <workItem from="1644319185904" duration="5918000" />
+      <workItem from="1644319185904" duration="9833000" />
     </task>
     <servers />
   </component>

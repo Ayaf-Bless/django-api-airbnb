@@ -25,5 +25,19 @@ class WriteRoomSerializer(serializers.Serializer):
     instant_book = serializers.BooleanField(default=False)
 
     def create(self, validated_data):
-
         return Room.objects.create(**validated_data)
+
+    def validate_beds(self, beds):
+        if beds < 5:
+            raise serializers.ValidationError("your room is too small")
+        else:
+            return beds
+
+    def validate(self, data):
+        check_in = data.get("check_in")
+        check_out = data.get("check_out")
+
+        if check_in == check_out:
+            raise serializers.ValidationError("can't happen pal")
+
+        return data
