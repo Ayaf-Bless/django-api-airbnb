@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -17,14 +18,22 @@ from .serializers import ReadRoomSerializer, WriteRoomSerializer
 # class ListRoomsView(ListAPIView):
 #     queryset = Room.objects.prefetch_related()
 #     serializer_class = RoomSerializer
+#
+# @api_view(["GET", "POST"])
+# def room_view(request):
+#     if request.method == "GET":
+#
+#
+#     elif request.method == "POST":
 
-@api_view(["GET", "POST"])
-def room_view(request):
-    if request.method == "GET":
+
+class RoomsView(APIView):
+    def get(self, request):
         rooms = Room.objects.prefetch_related()
         serializer = ReadRoomSerializer(rooms, many=True).data
         return Response(serializer)
-    elif request.method == "POST":
+
+    def post(self, request):
         if not request.user.is_authenticated:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         serializer = WriteRoomSerializer(data=request.data)
@@ -33,9 +42,20 @@ def room_view(request):
             room_serializer = ReadRoomSerializer(room).data
             return Response(status=status.HTTP_200_OK, data=room_serializer)
         else:
-            return Response(data=serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class SeeRoomView(RetrieveAPIView):
-    queryset = Room.objects.prefetch_related()
-    serializer_class = ReadRoomSerializer
+class RoomView(APIView):
+    def get(self, request, pk):
+        try:
+            room = Room.objects.get(pk=pk)
+            serializer = ReadRoomSerializer(room).data
+            return Response(data=serializer)
+        except Room.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def patch(self, request):
+        pass
+
+    def delete(self, request):
+        pass
