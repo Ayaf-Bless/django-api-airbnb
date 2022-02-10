@@ -34,10 +34,13 @@ class WriteRoomSerializer(serializers.Serializer):
             return beds
 
     def validate(self, data):
-        check_in = data.get("check_in")
-        check_out = data.get("check_out")
+        if not self.instance:
+            check_in = data.get("check_in")
+            check_out = data.get("check_out")
 
-        if check_in == check_out:
-            raise serializers.ValidationError("can't happen pal")
-
+            if check_in == check_out:
+                raise serializers.ValidationError("can't happen pal")
         return data
+
+    def update(self, instance, validated_data):
+        print(validated_data)
