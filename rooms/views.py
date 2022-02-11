@@ -69,10 +69,11 @@ class RoomView(APIView):
                 return Response(status=status.HTTP_403_FORBIDDEN)
             serializer = WriteRoomSerializer(room, data=request.data, partial=True)
             if serializer.is_valid():
-                serializer.save()
+                room = serializer.save()
+                return Response(ReadRoomSerializer(room).data)
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-            return Response(data=serializer.data)
+            # return Response(data=serializer.data)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
