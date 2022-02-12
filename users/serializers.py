@@ -10,7 +10,12 @@ class RelatedUserSerializer(serializers.ModelSerializer):
 
 
 class ReadUserSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = User
-        exclude = ["favs","password"]
+        exclude = ["favs", "password"]
+
+
+class WriteUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        exclude = ["id"]

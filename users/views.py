@@ -1,7 +1,8 @@
 from django.shortcuts import render
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from users.serializers import ReadUserSerializer
+from users.serializers import ReadUserSerializer, WriteUserSerializer
 from rest_framework import status
 from django.shortcuts import get_object_or_404
 from .models import User
@@ -11,12 +12,19 @@ from .models import User
 
 
 class Me(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
-        if request.user.is_authenticated:
-            return Response(ReadUserSerializer(request.user).data, status=status.HTTP_200_OK)
+        return Response(ReadUserSerializer(request.user).data, status=status.HTTP_200_OK)
 
     def patch(self, request):
-        pass
+        serializer = WriteUserSerializer(request.user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response()
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class UserView(APIView):
