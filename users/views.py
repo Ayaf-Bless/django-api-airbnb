@@ -26,7 +26,6 @@ class Me(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class UserView(APIView):
     def get(self, request, pk):
         user = get_object_or_404(klass=User, pk=pk)
