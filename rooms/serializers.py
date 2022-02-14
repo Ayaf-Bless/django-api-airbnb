@@ -3,18 +3,13 @@ from rest_framework import serializers
 from users.serializers import RelatedUserSerializer
 
 
-class ReadRoomSerializer(serializers.ModelSerializer):
+class RoomSerializer(serializers.ModelSerializer):
     user = RelatedUserSerializer()
 
     class Meta:
         model = Room
-        exclude = []
-
-
-class WriteRoomSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Room
-        exclude = ["id", "user", "modified"]
+        exclude = ["modified"]
+        read_only_fields = ["user", "id"]
 
     def validate_beds(self, beds):
         if beds < 5:
