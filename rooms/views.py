@@ -31,7 +31,7 @@ from .serializers import RoomSerializer
 class RoomsView(APIView):
     def get(self, request):
         rooms = Room.objects.prefetch_related()
-        serializer = ReadRoomSerializer(rooms, many=True).data
+        serializer = RoomSerializer(rooms, many=True).data
         return Response(serializer)
 
     def post(self, request):
