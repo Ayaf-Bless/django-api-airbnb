@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rooms.models import Room
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -49,5 +50,14 @@ class FavView(APIView):
         serializers = RoomSerializer(user.favs.all(), many=True)
         return Response(serializers.data)
 
-    def post(self, request):
-        pass
+    def patch(self, request):
+        pk = request.data.get("pk", None)
+        user = request.user
+        if pk is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        room = get_object_or_404(klass=Room, pk=pk)
+        if room in user.favs.all():
+            user.favs.remove(room)
+        else:
+            user.favs.add(room)
+        return Response(status=status.HTTP_200_OK)
