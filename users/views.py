@@ -1,4 +1,5 @@
 from django.shortcuts import render
+import jwt
 from rooms.models import Room
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -9,6 +10,8 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 from rooms.serializers import RoomSerializer
 from .models import User
+from django.contrib.auth import authenticate
+from django.conf import settings
 
 
 # Create your views here.
@@ -70,3 +73,18 @@ class FavView(APIView):
         else:
             user.favs.add(room)
         return Response(status=status.HTTP_200_OK)
+
+
+@api_view(["POST"])
+def login_view(request):
+    password = request.data.get("password")
+    username = request.data.get("username")
+    if not password and not username:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    user = authenticate(username=username, password=password)
+    if not user:
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
+    encoded_jwt = jwt.encode({"user_id": user.id}, settings.SECRET_KEY, algorithm="HS256")
+    return Response(data={"token": encoded_jwt})
+

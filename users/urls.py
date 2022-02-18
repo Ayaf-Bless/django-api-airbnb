@@ -3,6 +3,9 @@ from . import views
 
 app_name = "users"
 
-urlpatterns = [path("", views.UsersView.as_view()), path("me/", views.Me.as_view()),
+urlpatterns = [path("", views.UsersView.as_view()),
+               path("me/", views.Me.as_view()),
                path("me/favs/", views.FavView.as_view()),
-               path("<int:pk>", views.UserView.as_view())]
+               path("<int:pk>", views.UserView.as_view()),
+               path("login/", views.login_view)
+               ]
