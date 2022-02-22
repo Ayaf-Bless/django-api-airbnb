@@ -99,6 +99,8 @@ def room_search(request):
     beds = request.GET.get("beds", None)
     bathrooms = request.GET.get("bathrooms", None)
     bedrooms = request.GET.get("bedrooms", None)
+    lat = request.Get.get("lat", None)
+    lng = request.GET.get("lng", None)
     filter_kwarg = {}
     if max_price:
         filter_kwarg["price__lte"] = max_price
@@ -110,7 +112,12 @@ def room_search(request):
         filter_kwarg["bedrooms__lte"] = bedrooms
     if bathrooms:
         filter_kwarg["bathrooms__lte"] = bathrooms
-
+    if lat and lng:
+        common = 0.005
+        filter_kwarg["lat__gte"] = float(lat) - common
+        filter_kwarg["lat__lte"] = float(lat) + common
+        filter_kwarg["lng__gte"] = float(lng) - common
+        filter_kwarg["lng__gte"] = float(lng) + common
     paginator = PageNumberPagination()
     paginator.page_size = 10
     try:
