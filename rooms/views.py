@@ -77,7 +77,7 @@ class RoomView(APIView):
                 return Response(RoomSerializer(room).data)
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-            # return Response(data=serializer.data)
+            # return Response(data=serializer.data)+
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -113,7 +113,10 @@ def room_search(request):
 
     paginator = PageNumberPagination()
     paginator.page_size = 10
-    rooms = Room.objects.filter(**filter_kwarg)  
+    try:
+        rooms = Room.objects.filter(**filter_kwarg)
+    except ValueError:
+        rooms = Room.objects.prefetch_related()
     results = paginator.paginate_queryset(rooms, request=request)
     serializers = RoomSerializer(results, many=True)
     return paginator.get_paginated_response(serializers.data)
