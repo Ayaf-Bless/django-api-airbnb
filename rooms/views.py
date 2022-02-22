@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rest_framework.pagination import PageNumberPagination
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.generics import RetrieveAPIView
@@ -30,9 +31,12 @@ from .serializers import RoomSerializer
 
 class RoomsView(APIView):
     def get(self, request):
+        paginator = PageNumberPagination()
+        paginator.page_size = 10
         rooms = Room.objects.prefetch_related()
-        serializer = RoomSerializer(rooms, many=True).data
-        return Response(serializer)
+        result = paginator.paginate_queryset(rooms, request=request)
+        serializer = RoomSerializer(result, many=True).data
+        return paginator.get_paginated_response(serializer)
 
     def post(self, request):
         if not request.user.is_authenticated:
@@ -86,3 +90,13 @@ class RoomView(APIView):
             return Response(status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(["GET"])
+def room_search(request):
+    paginator = PageNumberPagination()
+    paginator.page_size = 10
+    rooms = Room.objects.filter()
+    results = paginator.paginate_queryset(rooms, request=request)
+    serializers = RoomSerializer(results, many=True)
+    return paginator.get_paginated_response(serializers.data)

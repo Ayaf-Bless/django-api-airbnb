@@ -88,3 +88,4 @@ def login_view(request):
     encoded_jwt = jwt.encode({"user_id": user.id}, settings.SECRET_KEY, algorithm="HS256")
     return Response(data={"token": encoded_jwt})
 
+
