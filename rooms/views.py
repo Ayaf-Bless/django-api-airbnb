@@ -94,9 +94,26 @@ class RoomView(APIView):
 
 @api_view(["GET"])
 def room_search(request):
+    max_price = request.GET.get("max_price", None)
+    min_price = request.GET.get("min_price", None)
+    beds = request.GET.get("beds", None)
+    bathrooms = request.GET.get("bathrooms", None)
+    bedrooms = request.GET.get("bedrooms", None)
+    filter_kwarg = {}
+    if max_price:
+        filter_kwarg["price__lte"] = max_price
+    if min_price:
+        filter_kwarg["price__gte"] = min_price
+    if beds:
+        filter_kwarg["beds__lte"] = beds
+    if bedrooms:
+        filter_kwarg["bedrooms__lte"] = bedrooms
+    if bathrooms:
+        filter_kwarg["bathrooms__lte"] = bathrooms
+
     paginator = PageNumberPagination()
     paginator.page_size = 10
-    rooms = Room.objects.filter()
+    rooms = Room.objects.filter(**filter_kwarg)  
     results = paginator.paginate_queryset(rooms, request=request)
     serializers = RoomSerializer(results, many=True)
     return paginator.get_paginated_response(serializers.data)
