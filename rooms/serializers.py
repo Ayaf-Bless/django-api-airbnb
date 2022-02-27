@@ -4,7 +4,7 @@ from users.serializers import UserSerializer
 
 
 class RoomSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    user = UserSerializer(read_only=True)
     is_fav = serializers.SerializerMethodField()
 
     class Meta:
@@ -37,3 +37,8 @@ class RoomSerializer(serializers.ModelSerializer):
             if check_in == check_out:
                 raise serializers.ValidationError("can't happen pal")
         return data
+
+    def create(self, validated_data):
+        request = self.context.get("request")
+        room = Room.objects.create(**validated_data, user=request.user)
+        return room

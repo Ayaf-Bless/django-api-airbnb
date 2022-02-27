@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cef6bd73-8db3-4452-a6c2-a03e848f8f21" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/rooms/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/views.py" afterDir="false" />
-    </list>
+    <list default="true" id="cef6bd73-8db3-4452-a6c2-a03e848f8f21" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -157,6 +154,7 @@
       <workItem from="1645152025738" duration="221000" />
       <workItem from="1645507210970" duration="8981000" />
       <workItem from="1645571067176" duration="3398000" />
+      <workItem from="1645687312334" duration="5857000" />
     </task>
     <servers />
   </component>
@@ -175,6 +173,6 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/django_api_airbnb$runserver.coverage" NAME="runserver Coverage Results" MODIFIED="1645571183854" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/django_api_airbnb$runserver.coverage" NAME="runserver Coverage Results" MODIFIED="1645688322889" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
