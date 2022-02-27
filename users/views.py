@@ -44,24 +44,14 @@ class UsersViewSet(ModelViewSet):
         encoded_jwt = jwt.encode({"user_id": user.id}, settings.SECRET_KEY, algorithm="HS256")
         return Response(data={"token": encoded_jwt, id: user.pk})
 
-
-@api_view(["POST"])
-@permission_classes([IsAuthenticated])
-def toggle_fav(request):
-    room = request.data.get("room")
-    print(room)
-
-
-class FavView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        user = request.user
+    @action(detail=True)
+    def favs(self, request, pk):
+        user = self.get_object()
         serializers = RoomSerializer(user.favs.all(), many=True)
         return Response(serializers.data)
 
-    def patch(self, request):
-        pk = request.data.get("pk", None)
+    @favs.mapping.put
+    def toggle_favs(self, request, pk):
         user = request.user
         if pk is None:
             return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -71,3 +61,4 @@ class FavView(APIView):
         else:
             user.favs.add(room)
         return Response(status=status.HTTP_200_OK)
+
